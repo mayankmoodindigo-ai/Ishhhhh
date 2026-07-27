@@ -1,0 +1,5 @@
+Put your song file in this folder, named song.mp3 (mp3 works everywhere)
+
+Then in index.html, find the placeholder block right under
+"this song reminds me of you" and replace it with:
+  <audio controls class="q-audio" src="assets/audio/song.mp3" style="width:100%;margin:10px 0;"></audio>

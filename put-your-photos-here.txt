@@ -1,0 +1,9 @@
+Put your photo files in this folder — e.g. photo1.jpg, photo2.jpg
+
+Then in index.html, find a placeholder block like this:
+  <div class="media-placeholder">...</div>
+
+...and replace it with:
+  <img src="assets/images/photo1.jpg" alt="a photo" class="media-frame">
+
+(change "photo1.jpg" to whatever you actually named your file)
