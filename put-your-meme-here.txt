@@ -1,8 +1,0 @@
-Put your meme video in this folder, named meme.mp4
-
-Then in index.html, find the placeholder block on the last page
-and replace it with:
-  <video controls playsinline class="media-frame" src="assets/video/meme.mp4"></video>
-
-Using a GIF instead? Put it in assets/images/ instead and use:
-  <img src="assets/images/meme.gif" class="media-frame">
