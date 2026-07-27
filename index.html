@@ -1,395 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Three Step Form</title>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>Hi Ishika 💗</title>
   <style>
+    :root {
+      --bg-pink: #ffd9e8;
+      --card: rgba(255, 255, 255, 0.94);
+      --pink: #ff4f95;
+      --pink-dark: #ff2b7d;
+      --text: #2d2430;
+    }
+
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: var(--bg-pink);
+      color: var(--text);
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #f5f7ff, #fff4f8);
-      color: #222;
+      min-height: 100dvh;
     }
 
-    .wrap {
-      min-height: 100vh;
-      display: flex;
+    .page {
+      min-height: 100dvh;
+      display: none;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
+      padding: 18px;
+      overflow-y: auto;
+      position: relative;
+      background: linear-gradient(180deg, #ffdbe8 0%, #ffd3e4 100%);
+    }
+
+    .page.active {
+      display: flex;
+      animation: fade 0.35s ease;
+    }
+
+    .page.photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 221, 235, 0.30), rgba(255, 230, 241, 0.72)),
+        var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.04);
+    }
+
+    .page-inner {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 460px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
 
     .card {
       width: 100%;
-      max-width: 760px;
-      background: #ffffff;
+      background: var(--card);
+      border-radius: 28px;
+      padding: 24px 18px;
+      box-shadow: 0 18px 45px rgba(122, 44, 86, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .wide {
+      padding: 24px 18px 28px;
+    }
+
+    .intro-image {
+      width: min(72%, 220px);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      display: block;
+      margin: 0 auto 18px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.7rem, 5vw, 2.2rem);
+      line-height: 1.22;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      text-align: center;
+      color: #6b5965;
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      height: 120px;
+      margin: 24px auto 0;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(255, 79, 149, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f4f1f5;
+      color: #333;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    #yesBtn {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      min-width: 140px;
+    }
+
+    #noBtn {
+      position: absolute;
+      right: 0;
+      top: 6px;
+      min-width: 116px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fff2f8;
+      color: var(--pink-dark);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
     .progress {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .progress span {
-      flex: 1;
-      height: 8px;
+      width: 100%;
+      height: 10px;
+      background: #ffeaf3;
       border-radius: 999px;
-      background: #e4e7f2;
-    }
-
-    .progress span.active {
-      background: #6c63ff;
-    }
-
-    .step {
-      display: none;
-    }
-
-    .step.active {
-      display: block;
-    }
-
-    h1,
-    h2 {
-      margin-top: 0;
-    }
-
-    p {
-      line-height: 1.7;
-    }
-
-    .field {
+      overflow: hidden;
       margin-bottom: 16px;
     }
 
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
+    .progress-fill {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, var(--pink), #ff9bc2);
+      border-radius: 999px;
+      transition: width 0.25s ease;
     }
 
-    input,
+    .question {
+      margin: 0 0 16px;
+      font-size: 1.24rem;
+      line-height: 1.5;
+      font-weight: 800;
+    }
+
+    .last-label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--pink-dark);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
     textarea,
-    select {
+    input[type="text"] {
       width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #d4d9e7;
-      border-radius: 14px;
-      font-size: 16px;
-    }
-
-    input[type="file"] {
-      padding: 10px;
-      background: #fafbff;
+      border: 2px solid #ffd4e7;
+      border-radius: 22px;
+      background: #fff;
+      padding: 16px;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
     }
 
     textarea {
-      min-height: 110px;
-      resize: vertical;
+      min-height: 140px;
+      resize: none;
     }
 
-    .buttons {
+    textarea:focus,
+    input[type="text"]:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px rgba(255, 79, 149, 0.15);
+    }
+
+    .field-note {
+      margin-top: 10px;
+      font-size: 0.86rem;
+      color: #9a6a80;
+      min-height: 20px;
+    }
+
+    .next-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    .top-images {
       display: flex;
       gap: 12px;
+      justify-content: center;
       flex-wrap: wrap;
-      margin-top: 20px;
     }
 
-    button {
+    .mini-pic {
+      width: 90px;
+      height: 90px;
+      border-radius: 22px;
+      object-fit: cover;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      border: 3px solid rgba(255, 255, 255, 0.78);
+      background: #fff;
+    }
+
+    .note-text {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .continue-icon {
+      width: 66px;
+      height: 66px;
       border: none;
-      border-radius: 999px;
-      padding: 12px 20px;
-      font-size: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: 900;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 24px rgba(255, 79, 149, 0.3);
       cursor: pointer;
     }
 
-    .back-btn {
-      background: #eceef7;
+    .slider-card {
+      text-align: center;
     }
 
-    .next-btn,
-    .submit-btn,
-    .game-btn {
-      background: #6c63ff;
-      color: #fff;
+    .slider-card h2 {
+      margin: 0 0 12px;
+      font-size: 1.55rem;
+      line-height: 1.35;
     }
 
-    .game-box {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 18px;
-      background: #f7f8ff;
+    .scale-value {
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--pink-dark);
+      line-height: 1;
+      margin: 10px 0 18px;
     }
 
-    .game-area {
-      position: relative;
+    .range-wrap {
+      padding: 10px 4px 0;
+    }
+
+    input[type="range"] {
       width: 100%;
-      height: 180px;
-      overflow: hidden;
-      border-radius: 16px;
-      background: #eef1ff;
-      border: 1px solid #d8def7;
-      margin-top: 12px;
+      accent-color: var(--pink);
+      height: 14px;
     }
 
-    .dino {
-      position: absolute;
-      left: 24px;
-      bottom: 20px;
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      background: #2d2d2d;
+    .scale-row {
+      display: flex;
+      justify-content: space-between;
+      color: #8b7180;
+      font-size: 0.9rem;
+      margin-top: 8px;
     }
 
-    .obstacle {
-      position: absolute;
-      right: -30px;
-      bottom: 20px;
-      width: 24px;
-      height: 48px;
-      border-radius: 6px;
-      background: #ff5c7a;
+    .final-text {
+      margin: 0;
+      font-size: 1.38rem;
+      line-height: 1.7;
+      text-align: center;
     }
 
-    .jump {
-      animation: jump 0.55s ease;
+    .small-copy {
+      margin: 12px 0 0;
+      font-size: 0.88rem;
+      color: #7c6570;
+      text-align: center;
+      line-height: 1.5;
     }
 
-    @keyframes jump {
-      0%, 100% { bottom: 20px; }
-      50% { bottom: 95px; }
+    .end-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
     }
 
-    .note {
-      font-size: 14px;
-      color: #5f6475;
+    .ghost-btn {
+      background: #fff;
+      border: 2px solid #ffd0e2;
+      color: var(--pink-dark);
     }
 
-    @media (max-width: 600px) {
+    .toast {
+      font-size: 0.85rem;
+      color: #568c63;
+      text-align: center;
+      min-height: 18px;
+      margin-top: 8px;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (min-width: 700px) {
       .card {
-        padding: 18px;
+        padding: 28px 24px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <form id="multiStepForm" action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="New 3-step form response">
-        <input type="hidden" name="_template" value="table">
+  <section id="page0" class="page active">
+    <div class="page-inner">
+      <div class="card">
+        <img src="tauba-ishika.png" alt="Tauba Tauba image" class="intro-image" />
+        <h1 class="title">Hi Ishika, will you change that “Tauba Tauba” name 🙂</h1>
+        <p class="subtitle">Please choose very carefully 🤍</p>
 
+        <div class="actions" id="introActions">
+          <button id="yesBtn" class="btn btn-primary" type="button">
+            Yes, of course
+          </button>
+          <button id="noBtn" class="btn btn-secondary" type="button">
+            No wayyyy
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="page1"
+    class="page photo"
+    style="--bg-image: url('ishika-white.png');"
+  >
+    <div class="page-inner">
+      <div class="card wide">
+        <div class="badge" id="questionCounter">Question 1 of 5</div>
         <div class="progress">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
+          <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <section class="step active">
-          <h1>Welcome</h1>
-          <p>
-            This small form is made to know you a little better and collect a few fun answers.
-            Please take a minute, answer honestly, and upload your two photos where asked.
-            The next page has a few more questions, a meme upload, and a tiny dino game for fun.
-            The last page has one final question, and once you submit it the response can come to your email.
-            Thank you for taking the time to fill this out.
-          </p>
+        <h2 class="question" id="questionText"></h2>
 
-          <div class="field">
-            <label for="name">1. Your name</label>
-            <input id="name" name="Name" type="text" required>
-          </div>
+        <textarea
+          id="answerInput"
+          placeholder="Write your answer here..."
+        ></textarea>
 
-          <div class="field">
-            <label for="q1">2. How are you feeling today?</label>
-            <textarea id="q1" name="How are you feeling today?" required></textarea>
-          </div>
+        <div class="field-note" id="questionNote"></div>
 
-          <div class="field">
-            <label for="q2">3. What is one thing you really enjoy these days?</label>
-            <textarea id="q2" name="What is one thing you really enjoy these days?" required></textarea>
-          </div>
-
-          <div class="field">
-            <label for="photo1">Upload photo 1</label>
-            <input id="photo1" name="Photo 1" type="file" accept="image/*" required>
-          </div>
-
-          <div class="field">
-            <label for="photo2">Upload photo 2</label>
-            <input id="photo2" name="Photo 2" type="file" accept="image/*" required>
-          </div>
-
-          <div class="buttons">
-            <button class="next-btn" type="button">Next</button>
-          </div>
-        </section>
-
-        <section class="step">
-          <h2>Page 2</h2>
-
-          <div class="field">
-            <label for="q3">4. What kind of content makes you laugh the most?</label>
-            <textarea id="q3" name="What kind of content makes you laugh the most?" required></textarea>
-          </div>
-
-          <div class="field">
-            <label for="q4">5. What is one memory you never get tired of revisiting?</label>
-            <textarea id="q4" name="What is one memory you never get tired of revisiting?" required></textarea>
-          </div>
-
-          <div class="field">
-            <label for="q5">6. Pick your current mood</label>
-            <select id="q5" name="Current mood" required>
-              <option value="">Select one</option>
-              <option>Happy</option>
-              <option>Excited</option>
-              <option>Calm</option>
-              <option>Confused</option>
-              <option>Sleepy</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="meme">Upload your meme</label>
-            <input id="meme" name="Meme" type="file" accept="image/*">
-          </div>
-
-          <div class="game-box">
-            <label>Dino game</label>
-            <p class="note">Tap the purple button or press space to jump.</p>
-            <button class="game-btn" type="button" id="jumpBtn">Jump</button>
-            <div class="game-area" id="gameArea">
-              <div class="dino" id="dino"></div>
-              <div class="obstacle" id="obstacle"></div>
-            </div>
-            <p class="note" id="gameStatus">Game running...</p>
-          </div>
-
-          <div class="buttons">
-            <button class="back-btn" type="button">Back</button>
-            <button class="next-btn" type="button">Next</button>
-          </div>
-        </section>
-
-        <section class="step">
-          <h2>Last page</h2>
-
-          <div class="field">
-            <label for="q6">7. What is one final thing you want to tell me?</label>
-            <textarea id="q6" name="Final message" required></textarea>
-          </div>
-
-          <p class="note">
-            Change the email in the form action near the top of this file so the answers go to your inbox.
-          </p>
-
-          <div class="buttons">
-            <button class="back-btn" type="button">Back</button>
-            <button class="submit-btn" type="submit">Submit</button>
-          </div>
-        </section>
-      </form>
+        <div class="next-wrap">
+          <button id="nextQuestionBtn" class="btn btn-primary" type="button">
+            Next
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section
+    id="page2"
+    class="page photo"
+    style="--bg-image: url('ishika-purple.png');"
+  >
+    <div class="page-inner">
+      <div class="top-images">
+        <img src="radha.jpg" alt="Radha" class="mini-pic" />
+        <img src="ishika-eyes.png" alt="Ishika's eyes" class="mini-pic" />
+      </div>
+
+      <div class="card wide">
+        <p class="note-text">
+          What do you think — who is the bigger cutie pie: Radha or you?
+          I’ve never said this to you, but the winner is you.
+          Please don’t discuss this with me, because I’ll get shy.
+          And your eyes are the clearest in this picture, so don’t ask why I chose this one.
+        </p>
+      </div>
+
+      <button id="toScaleBtn" class="continue-icon" type="button" aria-label="Continue">
+        →
+      </button>
+    </div>
+  </section>
+
+  <section
+    id="page3"
+    class="page photo"
+    style="--bg-image: url('ishika-purple.png');"
+  >
+    <div class="page-inner">
+      <div class="card slider-card">
+        <h2>On a scale from 1 to 10, how free are you on Sunday?</h2>
+        <div id="scaleValue" class="scale-value">5</div>
+
+        <div class="range-wrap">
+          <input id="freeScale" type="range" min="1" max="10" value="5" />
+          <div class="scale-row">
+            <span>1</span>
+            <span>10</span>
+          </div>
+        </div>
+
+        <div class="next-wrap" style="justify-content: center; margin-top: 22px;">
+          <button id="finishBtn" class="btn btn-primary" type="button">
+            Finish
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="page4" class="page">
+    <div class="page-inner">
+      <div class="card wide">
+        <p class="final-text">
+          <strong><em>Thanks for filling out this form, sikar ri chori 💗</em></strong>
+        </p>
+
+        <p class="small-copy">
+          Tap the button below to open an email with all the answers.
+          If the mail app doesn’t open, use the copy button.
+        </p>
+
+        <div class="end-actions">
+          <button id="sendMailBtn" class="btn btn-primary" type="button">
+            Send answers
+          </button>
+          <button id="copyAnswersBtn" class="btn ghost-btn" type="button">
+            Copy answers
+          </button>
+        </div>
+
+        <div class="toast" id="copyToast"></div>
+
+        <textarea
+          id="summaryPreview"
+          readonly
+          style="margin-top: 14px; min-height: 180px;"
+        ></textarea>
+      </div>
+    </div>
+  </section>
 
   <script>
-    const steps = document.querySelectorAll('.step');
-    const progress = document.querySelectorAll('.progress span');
-    const nextButtons = document.querySelectorAll('.next-btn');
-    const backButtons = document.querySelectorAll('.back-btn');
-    let currentStep = 0;
+    const MAIL_TO = "YOUR_EMAIL@example.com";
 
-    function showStep(index) {
-      steps.forEach((step, i) => {
-        step.classList.toggle('active', i === index);
-        progress[i].classList.toggle('active', i <= index);
+    const pageIds = ["page0", "page1", "page2", "page3", "page4"];
+
+    function showPage(id) {
+      pageIds.forEach((pageId) => {
+        document.getElementById(pageId).classList.toggle("active", pageId === id);
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function validateStep(index) {
-      const inputs = steps[index].querySelectorAll('input, textarea, select');
-      for (const input of inputs) {
-        if (!input.checkValidity()) {
-          input.reportValidity();
-          return false;
-        }
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const introActions = document.getElementById("introActions");
+    let noMoves = 0;
+
+    function moveNoButton() {
+      const area = introActions.getBoundingClientRect();
+      const btnW = noBtn.offsetWidth;
+      const btnH = noBtn.offsetHeight;
+      const yesRect = yesBtn.getBoundingClientRect();
+
+      let x = 0;
+      let y = 0;
+      let attempts = 0;
+
+      do {
+        x = Math.random() * Math.max(10, area.width - btnW);
+        y = Math.random() * Math.max(10, area.height - btnH);
+        attempts += 1;
+      } while (
+        attempts < 40 &&
+        Math.abs(area.left + x + btnW / 2 - (yesRect.left + yesRect.width / 2)) < 120 &&
+        Math.abs(area.top + y + btnH / 2 - (yesRect.top + yesRect.height / 2)) < 70
+      );
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+      noBtn.style.right = "auto";
+      noBtn.style.bottom = "auto";
+
+      noMoves += 1;
+      if (noMoves > 2) {
+        noBtn.textContent = "Still no? 😌";
       }
-      return true;
     }
 
-    nextButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        if (!validateStep(currentStep)) return;
-        if (currentStep < steps.length - 1) {
-          currentStep += 1;
-          showStep(currentStep);
-        }
-      });
+    ["mouseenter", "click", "touchstart"].forEach((evt) => {
+      noBtn.addEventListener(
+        evt,
+        (e) => {
+          e.preventDefault();
+          moveNoButton();
+        },
+        { passive: false }
+      );
     });
 
-    backButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        if (currentStep > 0) {
-          currentStep -= 1;
-          showStep(currentStep);
-        }
-      });
+    document.getElementById("page0").addEventListener("mousemove", (e) => {
+      const rect = noBtn.getBoundingClientRect();
+      const nearX = Math.abs(e.clientX - (rect.left + rect.width / 2)) < 70;
+      const nearY = Math.abs(e.clientY - (rect.top + rect.height / 2)) < 45;
+      if (nearX && nearY) moveNoButton();
     });
 
-    const dino = document.getElementById('dino');
-    const obstacle = document.getElementById('obstacle');
-    const jumpBtn = document.getElementById('jumpBtn');
-    const gameStatus = document.getElementById('gameStatus');
-    let obstaclePosition = -30;
-    let jumping = false;
+    yesBtn.addEventListener("click", () => {
+      showPage("page1");
+    });
 
-    function jump() {
-      if (jumping) return;
-      jumping = true;
-      dino.classList.add('jump');
-      setTimeout(() => {
-        dino.classList.remove('jump');
-        jumping = false;
-      }, 550);
+    const questions = [
+      {
+        key: "food",
+        text: "Ishika, tell me — which food item(s) could you literally eat every week without getting bored?"
+      },
+      {
+        key: "hobby",
+        text: "What is your cutest hobby (other than teasing me)?"
+      },
+      {
+        key: "choice",
+        text: "Which do you like the most — travelling, shopping, watching movies in the theatre, cafés, beaches, or just sleeping?"
+      },
+      {
+        key: "dessert",
+        text: "Ice cream, waffles, or something different?"
+      },
+      {
+        key: "surprise",
+        text: "Do you like surprises, or are you impatient like me?"
+      }
+    ];
+
+    const answers = {};
+    let currentQuestion = 0;
+
+    const questionCounter = document.getElementById("questionCounter");
+    const progressFill = document.getElementById("progressFill");
+    const questionText = document.getElementById("questionText");
+    const answerInput = document.getElementById("answerInput");
+    const questionNote = document.getElementById("questionNote");
+    const nextQuestionBtn = document.getElementById("nextQuestionBtn");
+
+    function renderQuestion() {
+      const item = questions[currentQuestion];
+      questionCounter.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      progressFill.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+      questionText.innerHTML =
+        currentQuestion === 4
+          ? `<span class="last-label">Last Last Last !!!!</span><br>${item.text}`
+          : item.text;
+
+      answerInput.value = answers[item.key] || "";
+      questionNote.textContent = "";
+      nextQuestionBtn.textContent =
+        currentQuestion === questions.length - 1 ? "Done" : "Next";
     }
 
-    jumpBtn.addEventListener('click', jump);
-    window.addEventListener('keydown', event => {
-      if (event.code === 'Space') jump();
-    });
+    nextQuestionBtn.addEventListener("click", () => {
+      const value = answerInput.value.trim();
 
-    setInterval(() => {
-      obstaclePosition += 6;
-      obstacle.style.right = `${obstaclePosition}px`;
-
-      const dinoBottom = parseInt(window.getComputedStyle(dino).bottom, 10);
-      const areaWidth = document.getElementById('gameArea').offsetWidth;
-      const obstacleLeft = areaWidth - obstaclePosition - 24;
-
-      if (obstaclePosition > areaWidth + 30) {
-        obstaclePosition = -30;
+      if (!value) {
+        questionNote.textContent = "Thoda sa answer toh do 💗";
+        answerInput.focus();
+        return;
       }
 
-      if (obstacleLeft > 24 && obstacleLeft < 62 && dinoBottom < 60) {
-        gameStatus.textContent = 'Oops, you hit the obstacle. Jump again!';
+      answers[questions[currentQuestion].key] = value;
+
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        answerInput.focus();
       } else {
-        gameStatus.textContent = 'Game running...';
+        showPage("page2");
       }
-    }, 30);
+    });
 
-    showStep(currentStep);
+    renderQuestion();
+
+    document.getElementById("toScaleBtn").addEventListener("click", () => {
+      showPage("page3");
+    });
+
+    const freeScale = document.getElementById("freeScale");
+    const scaleValue = document.getElementById("scaleValue");
+
+    freeScale.addEventListener("input", () => {
+      scaleValue.textContent = freeScale.value;
+    });
+
+    let summaryText = "";
+
+    function buildSummary() {
+      return [
+        "Hi!",
+        "",
+        "Here are Ishika's answers from the form:",
+        "",
+        `1. Food item(s): ${answers.food}`,
+        `2. Cutest hobby: ${answers.hobby}`,
+        `3. Most liked option: ${answers.choice}`,
+        `4. Ice cream / waffles / something different: ${answers.dessert}`,
+        `5. Surprises or impatience: ${answers.surprise}`,
+        `6. Free on Sunday (1-10): ${answers.sunday}`,
+        "",
+        "Sent from the cute form 💗"
+      ].join("\n");
+    }
+
+    document.getElementById("finishBtn").addEventListener("click", () => {
+      answers.sunday = freeScale.value;
+      summaryText = buildSummary();
+      document.getElementById("summaryPreview").value = summaryText;
+      document.getElementById("copyToast").textContent = "";
+      showPage("page4");
+    });
+
+    document.getElementById("sendMailBtn").addEventListener("click", () => {
+      if (MAIL_TO === "YOUR_EMAIL@example.com") {
+        document.getElementById("copyToast").textContent =
+          "First replace YOUR_EMAIL@example.com with your own email address.";
+        return;
+      }
+
+      const subject = encodeURIComponent("Ishika's Form Response 💗");
+      const body = encodeURIComponent(summaryText);
+      window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
+    });
+
+    document.getElementById("copyAnswersBtn").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(summaryText);
+        document.getElementById("copyToast").textContent = "Answers copied 💗";
+      } catch (error) {
+        document.getElementById("copyToast").textContent =
+          "Copy didn’t work here. Long-press inside the box and copy the text.";
+      }
+    });
   </script>
 </body>
 </html>
