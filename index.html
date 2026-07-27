@@ -2,704 +2,436 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-  <title>Hi Ishika 💗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sikar ri chori re vaste</title>
   <style>
     :root {
-      --bg-pink: #ffd9e8;
-      --card: rgba(255, 255, 255, 0.94);
-      --pink: #ff4f95;
-      --pink-dark: #ff2b7d;
-      --text: #2d2430;
+      --bg-1: #fff3fb;
+      --bg-2: #f7ecff;
+      --card: rgba(255, 255, 255, 0.88);
+      --text: #40263f;
+      --muted: #7a5e78;
+      --accent: #ff5fa2;
+      --accent-dark: #e5488d;
+      --accent-soft: #ffd8ea;
+      --border: rgba(219, 174, 204, 0.7);
+      --shadow: 0 22px 55px rgba(161, 89, 137, 0.15);
     }
 
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: var(--bg-pink);
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
+      background:
+        radial-gradient(circle at top left, #ffe1ef 0%, transparent 32%),
+        radial-gradient(circle at bottom right, #f0ddff 0%, transparent 28%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      padding: 24px;
     }
 
-    body {
-      min-height: 100dvh;
+    .app-shell {
+      width: min(100%, 920px);
+      margin: 0 auto;
     }
 
-    .page {
-      min-height: 100dvh;
+    .screen {
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      overflow-y: auto;
-      position: relative;
-      background: linear-gradient(180deg, #ffdbe8 0%, #ffd3e4 100%);
     }
 
-    .page.active {
-      display: flex;
-      animation: fade 0.35s ease;
+    .screen.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
     }
 
-    .page.photo::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 221, 235, 0.30), rgba(255, 230, 241, 0.72)),
-        var(--bg-image);
-      background-size: cover;
-      background-position: center;
-      filter: saturate(1.04);
-    }
-
-    .page-inner {
-      position: relative;
-      z-index: 1;
-      width: min(100%, 460px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+    .card,
+    .final-wide-card {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
     }
 
     .card {
-      width: 100%;
-      background: var(--card);
-      border-radius: 28px;
-      padding: 24px 18px;
-      box-shadow: 0 18px 45px rgba(122, 44, 86, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px);
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 28px 24px;
     }
 
-    .wide {
-      padding: 24px 18px 28px;
-    }
-
-    .intro-image {
-      width: min(72%, 220px);
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 24px;
-      display: block;
-      margin: 0 auto 18px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-    }
-
-    .title {
-      margin: 0;
-      font-size: clamp(1.7rem, 5vw, 2.2rem);
-      line-height: 1.22;
+    .intro-card {
       text-align: center;
-      font-weight: 800;
     }
 
-    .subtitle {
-      margin: 12px 0 0;
-      text-align: center;
-      color: #6b5965;
-      font-size: 0.95rem;
-    }
-
-    .actions {
-      position: relative;
-      width: 100%;
-      max-width: 320px;
-      height: 120px;
-      margin: 24px auto 0;
-    }
-
-    .btn {
-      border: none;
-      border-radius: 999px;
-      padding: 14px 22px;
-      font-size: 1rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
-      color: #fff;
-      box-shadow: 0 10px 20px rgba(255, 79, 149, 0.3);
-    }
-
-    .btn-secondary {
-      background: #f4f1f5;
-      color: #333;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-    }
-
-    #yesBtn {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      min-width: 140px;
-    }
-
-    #noBtn {
-      position: absolute;
-      right: 0;
-      top: 6px;
-      min-width: 116px;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #fff2f8;
-      color: var(--pink-dark);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 0.82rem;
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 0.88rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
     }
 
-    .progress {
-      width: 100%;
-      height: 10px;
-      background: #ffeaf3;
-      border-radius: 999px;
+    h1, h2 {
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+    }
+
+    .subcopy {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    .hero-photo {
+      margin: 20px 0 18px;
+      border-radius: 24px;
       overflow: hidden;
-      margin-bottom: 16px;
+      background: #fff7fb;
+      border: 1px solid var(--border);
+      aspect-ratio: 1 / 1;
     }
 
-    .progress-fill {
-      height: 100%;
-      width: 20%;
-      background: linear-gradient(90deg, var(--pink), #ff9bc2);
-      border-radius: 999px;
-      transition: width 0.25s ease;
-    }
-
-    .question {
-      margin: 0 0 16px;
-      font-size: 1.24rem;
-      line-height: 1.5;
-      font-weight: 800;
-    }
-
-    .last-label {
-      display: inline-block;
-      margin-bottom: 10px;
-      color: var(--pink-dark);
-      font-size: 1rem;
-      font-weight: 900;
-    }
-
-    textarea,
-    input[type="text"] {
+    .hero-photo img {
       width: 100%;
-      border: 2px solid #ffd4e7;
-      border-radius: 22px;
-      background: #fff;
-      padding: 16px;
-      font-size: 1rem;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .question-text {
+      font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+      line-height: 1.45;
+      margin-bottom: 18px;
+    }
+
+    .answer-input {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
       color: var(--text);
+      padding: 16px 18px;
+      font: inherit;
+      font-size: 1rem;
+      line-height: 1.55;
+      resize: vertical;
       outline: none;
+      transition: 0.2s ease;
     }
 
-    textarea {
-      min-height: 140px;
-      resize: none;
+    .answer-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.12);
     }
 
-    textarea:focus,
-    input[type="text"]:focus {
-      border-color: var(--pink);
-      box-shadow: 0 0 0 4px rgba(255, 79, 149, 0.15);
-    }
-
-    .field-note {
-      margin-top: 10px;
-      font-size: 0.86rem;
-      color: #9a6a80;
-      min-height: 20px;
-    }
-
-    .next-wrap {
+    .button-row {
       display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
       justify-content: flex-end;
       margin-top: 18px;
     }
 
-    .top-images {
-      display: flex;
-      gap: 12px;
+    .button-row.center {
       justify-content: center;
-      flex-wrap: wrap;
     }
 
-    .mini-pic {
-      width: 90px;
-      height: 90px;
-      border-radius: 22px;
-      object-fit: cover;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      border: 3px solid rgba(255, 255, 255, 0.78);
-      background: #fff;
-    }
-
-    .note-text {
-      margin: 0;
-      font-size: 1.05rem;
-      line-height: 1.75;
-    }
-
-    .continue-icon {
-      width: 66px;
-      height: 66px;
+    button {
       border: none;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
-      color: #fff;
-      font-size: 1.8rem;
-      font-weight: 900;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 12px 24px rgba(255, 79, 149, 0.3);
+      border-radius: 999px;
+      padding: 13px 22px;
+      font: inherit;
+      font-weight: 700;
       cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
     }
 
-    .slider-card {
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      box-shadow: 0 14px 28px rgba(229, 72, 141, 0.24);
+    }
+
+    button.secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .result-card {
+      max-width: 520px;
+      margin: 0 auto 18px;
+      padding: 26px 22px;
       text-align: center;
     }
 
-    .slider-card h2 {
-      margin: 0 0 12px;
-      font-size: 1.55rem;
-      line-height: 1.35;
+    .final-wide-card {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 22px;
     }
 
-    .scale-value {
-      font-size: 4rem;
-      font-weight: 900;
-      color: var(--pink-dark);
-      line-height: 1;
-      margin: 10px 0 18px;
+    .final-note {
+      margin: 0 0 18px;
+      padding: 18px 22px;
+      border-radius: 22px;
+      background: rgba(255, 248, 252, 0.96);
+      border: 1px solid var(--border);
+      line-height: 1.75;
+      font-size: 1.02rem;
+      color: var(--text);
     }
 
-    .range-wrap {
-      padding: 10px 4px 0;
+    .final-photo-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
     }
 
-    input[type="range"] {
+    .final-photo-card {
+      height: 150px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .final-photo-card img {
       width: 100%;
-      accent-color: var(--pink);
-      height: 14px;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      background: white;
     }
 
-    .scale-row {
-      display: flex;
-      justify-content: space-between;
-      color: #8b7180;
-      font-size: 0.9rem;
-      margin-top: 8px;
-    }
-
-    .final-text {
-      margin: 0;
-      font-size: 1.38rem;
-      line-height: 1.7;
-      text-align: center;
-    }
-
-    .small-copy {
-      margin: 12px 0 0;
-      font-size: 0.88rem;
-      color: #7c6570;
-      text-align: center;
-      line-height: 1.5;
-    }
-
-    .end-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .ghost-btn {
-      background: #fff;
-      border: 2px solid #ffd0e2;
-      color: var(--pink-dark);
-    }
-
-    .toast {
-      font-size: 0.85rem;
-      color: #568c63;
-      text-align: center;
-      min-height: 18px;
-      margin-top: 8px;
-    }
-
-    @keyframes fade {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.985);
+        transform: translateY(6px);
       }
       to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
       }
     }
 
-    @media (min-width: 700px) {
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
       .card {
-        padding: 28px 24px;
+        padding: 24px 18px;
+      }
+
+      .final-wide-card {
+        padding: 18px;
+      }
+
+      .final-note {
+        padding: 16px 16px;
+      }
+
+      .final-photo-card {
+        height: 128px;
+      }
+
+      .button-row {
+        justify-content: center;
+      }
+
+      button {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <section id="page0" class="page active">
-    <div class="page-inner">
-      <div class="card">
-        <img src="tauba-ishika.png" alt="Tauba Tauba image" class="intro-image" />
-        <h1 class="title">Hi Ishika, will you change that “Tauba Tauba” name 🙂</h1>
-        <p class="subtitle">Please choose very carefully 🤍</p>
-
-        <div class="actions" id="introActions">
-          <button id="yesBtn" class="btn btn-primary" type="button">
-            Yes, of course
-          </button>
-          <button id="noBtn" class="btn btn-secondary" type="button">
-            No wayyyy
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section
-    id="page1"
-    class="page photo"
-    style="--bg-image: url('ishika-white.png');"
-  >
-    <div class="page-inner">
-      <div class="card wide">
-        <div class="badge" id="questionCounter">Question 1 of 5</div>
-        <div class="progress">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <h2 class="question" id="questionText"></h2>
-
-        <textarea
-          id="answerInput"
-          placeholder="Write your answer here..."
-        ></textarea>
-
-        <div class="field-note" id="questionNote"></div>
-
-        <div class="next-wrap">
-          <button id="nextQuestionBtn" class="btn btn-primary" type="button">
-            Next
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section
-    id="page2"
-    class="page photo"
-    style="--bg-image: url('ishika-purple.png');"
-  >
-    <div class="page-inner">
-      <div class="top-images">
-        <img src="radha.jpg" alt="Radha" class="mini-pic" />
-        <img src="ishika-eyes.png" alt="Ishika's eyes" class="mini-pic" />
-      </div>
-
-      <div class="card wide">
-        <p class="note-text">
-          What do you think — who is the bigger cutie pie: Radha or you?
-          I’ve never said this to you, but the winner is you.
-          Please don’t discuss this with me, because I’ll get shy.
-          And your eyes are the clearest in this picture, so don’t ask why I chose this one.
+  <div class="app-shell">
+    <section id="introScreen" class="screen active">
+      <div class="card intro-card">
+        <p class="eyebrow">For Ishika </p>
+        <h1>One tiny cute form</h1>
+        <p class="subcopy">
+          Bas 6 chhote se sawaal hain. Aaram se bhar do.
         </p>
+
+        <div class="hero-photo">
+          <img src="tauba-ishika.png" alt="Ishika" />
+        </div>
+
+        <div class="button-row center">
+          <button class="primary" id="startBtn">Start</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="questionScreen" class="screen">
+      <div class="card">
+        <h2 id="questionText" class="question-text"></h2>
+
+        <textarea id="answerInput" class="answer-input"></textarea>
+
+        <div class="button-row">
+          <button class="secondary" id="backBtn">Back</button>
+          <button class="primary" id="nextBtn">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="finalScreen" class="screen">
+      <div class="card result-card">
+        <p class="eyebrow">Done 💌</p>
+        <h2>All set</h2>
+
+        <div class="button-row center">
+          <button class="primary" id="mailBtn">Open email</button>
+          <button class="secondary" id="editBtn">Edit answers</button>
+        </div>
       </div>
 
-      <button id="toScaleBtn" class="continue-icon" type="button" aria-label="Continue">
-        →
-      </button>
-    </div>
-  </section>
+      <div class="final-wide-card">
+        <p class="final-note">
+          What do you think — who is the bigger cutie pie: Radha or you? I’ve never said this to you, but the winner is you. Please don’t discuss this with me, because I’ll get shy. And your eyes are the clearest in this picture, so don’t ask why I chose this one.
+        </p>
 
-  <section
-    id="page3"
-    class="page photo"
-    style="--bg-image: url('ishika-purple.png');"
-  >
-    <div class="page-inner">
-      <div class="card slider-card">
-        <h2>On a scale from 1 to 10, how free are you on Sunday?</h2>
-        <div id="scaleValue" class="scale-value">5</div>
-
-        <div class="range-wrap">
-          <input id="freeScale" type="range" min="1" max="10" value="5" />
-          <div class="scale-row">
-            <span>1</span>
-            <span>10</span>
+        <div class="final-photo-strip">
+          <div class="final-photo-card">
+            <img src="radha.jpg" alt="Radha" />
+          </div>
+          <div class="final-photo-card">
+            <img src="ishika-eyes.png" alt="Ishika eyes" />
           </div>
         </div>
-
-        <div class="next-wrap" style="justify-content: center; margin-top: 22px;">
-          <button id="finishBtn" class="btn btn-primary" type="button">
-            Finish
-          </button>
-        </div>
       </div>
-    </div>
-  </section>
-
-  <section id="page4" class="page">
-    <div class="page-inner">
-      <div class="card wide">
-        <p class="final-text">
-          <strong><em>Thanks for filling out this form, sikar ri chori 💗</em></strong>
-        </p>
-
-        <p class="small-copy">
-          Tap the button below to open an email with all the answers.
-          If the mail app doesn’t open, use the copy button.
-        </p>
-
-        <div class="end-actions">
-          <button id="sendMailBtn" class="btn btn-primary" type="button">
-            Send answers
-          </button>
-          <button id="copyAnswersBtn" class="btn ghost-btn" type="button">
-            Copy answers
-          </button>
-        </div>
-
-        <div class="toast" id="copyToast"></div>
-
-        <textarea
-          id="summaryPreview"
-          readonly
-          style="margin-top: 14px; min-height: 180px;"
-        ></textarea>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <script>
-    const MAIL_TO = "YOUR_EMAIL@example.com";
+    const questions = [
+      "Food item(s)",
+      "Cutest hobby",
+      "Most liked option",
+      "Ice cream / waffles / something different",
+      "Surprises or impatience",
+      "Free on Sunday (1-10)"
+    ];
 
-    const pageIds = ["page0", "page1", "page2", "page3", "page4"];
+    const answers = new Array(questions.length).fill("");
+    let currentIndex = 0;
 
-    function showPage(id) {
-      pageIds.forEach((pageId) => {
-        document.getElementById(pageId).classList.toggle("active", pageId === id);
+    const introScreen = document.getElementById("introScreen");
+    const questionScreen = document.getElementById("questionScreen");
+    const finalScreen = document.getElementById("finalScreen");
+
+    const questionText = document.getElementById("questionText");
+    const answerInput = document.getElementById("answerInput");
+    const startBtn = document.getElementById("startBtn");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const mailBtn = document.getElementById("mailBtn");
+    const editBtn = document.getElementById("editBtn");
+
+    function setScreen(screen) {
+      [introScreen, questionScreen, finalScreen].forEach((section) => {
+        section.classList.remove("active");
       });
+      screen.classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const introActions = document.getElementById("introActions");
-    let noMoves = 0;
-
-    function moveNoButton() {
-      const area = introActions.getBoundingClientRect();
-      const btnW = noBtn.offsetWidth;
-      const btnH = noBtn.offsetHeight;
-      const yesRect = yesBtn.getBoundingClientRect();
-
-      let x = 0;
-      let y = 0;
-      let attempts = 0;
-
-      do {
-        x = Math.random() * Math.max(10, area.width - btnW);
-        y = Math.random() * Math.max(10, area.height - btnH);
-        attempts += 1;
-      } while (
-        attempts < 40 &&
-        Math.abs(area.left + x + btnW / 2 - (yesRect.left + yesRect.width / 2)) < 120 &&
-        Math.abs(area.top + y + btnH / 2 - (yesRect.top + yesRect.height / 2)) < 70
-      );
-
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-      noBtn.style.right = "auto";
-      noBtn.style.bottom = "auto";
-
-      noMoves += 1;
-      if (noMoves > 2) {
-        noBtn.textContent = "Still no? 😌";
-      }
-    }
-
-    ["mouseenter", "click", "touchstart"].forEach((evt) => {
-      noBtn.addEventListener(
-        evt,
-        (e) => {
-          e.preventDefault();
-          moveNoButton();
-        },
-        { passive: false }
-      );
-    });
-
-    document.getElementById("page0").addEventListener("mousemove", (e) => {
-      const rect = noBtn.getBoundingClientRect();
-      const nearX = Math.abs(e.clientX - (rect.left + rect.width / 2)) < 70;
-      const nearY = Math.abs(e.clientY - (rect.top + rect.height / 2)) < 45;
-      if (nearX && nearY) moveNoButton();
-    });
-
-    yesBtn.addEventListener("click", () => {
-      showPage("page1");
-    });
-
-    const questions = [
-      {
-        key: "food",
-        text: "Ishika, tell me — which food item(s) could you literally eat every week without getting bored?"
-      },
-      {
-        key: "hobby",
-        text: "What is your cutest hobby (other than teasing me)?"
-      },
-      {
-        key: "choice",
-        text: "Which do you like the most — travelling, shopping, watching movies in the theatre, cafés, beaches, or just sleeping?"
-      },
-      {
-        key: "dessert",
-        text: "Ice cream, waffles, or something different?"
-      },
-      {
-        key: "surprise",
-        text: "Do you like surprises, or are you impatient like me?"
-      }
-    ];
-
-    const answers = {};
-    let currentQuestion = 0;
-
-    const questionCounter = document.getElementById("questionCounter");
-    const progressFill = document.getElementById("progressFill");
-    const questionText = document.getElementById("questionText");
-    const answerInput = document.getElementById("answerInput");
-    const questionNote = document.getElementById("questionNote");
-    const nextQuestionBtn = document.getElementById("nextQuestionBtn");
-
     function renderQuestion() {
-      const item = questions[currentQuestion];
-      questionCounter.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
-      progressFill.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-      questionText.innerHTML =
-        currentQuestion === 4
-          ? `<span class="last-label">Last Last Last !!!!</span><br>${item.text}`
-          : item.text;
-
-      answerInput.value = answers[item.key] || "";
-      questionNote.textContent = "";
-      nextQuestionBtn.textContent =
-        currentQuestion === questions.length - 1 ? "Done" : "Next";
+      questionText.textContent = questions[currentIndex];
+      answerInput.value = answers[currentIndex] || "";
+      nextBtn.textContent = currentIndex === questions.length - 1 ? "Finish" : "Next";
+      answerInput.focus();
     }
 
-    nextQuestionBtn.addEventListener("click", () => {
-      const value = answerInput.value.trim();
+    function saveCurrentAnswer() {
+      answers[currentIndex] = answerInput.value.trim();
+    }
 
-      if (!value) {
-        questionNote.textContent = "Thoda sa answer toh do 💗";
-        answerInput.focus();
-        return;
-      }
+    function startForm() {
+      currentIndex = 0;
+      renderQuestion();
+      setScreen(questionScreen);
+    }
 
-      answers[questions[currentQuestion].key] = value;
+    function goNext() {
+      saveCurrentAnswer();
 
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion += 1;
+      if (currentIndex < questions.length - 1) {
+        currentIndex += 1;
         renderQuestion();
-        answerInput.focus();
       } else {
-        showPage("page2");
+        setScreen(finalScreen);
       }
-    });
-
-    renderQuestion();
-
-    document.getElementById("toScaleBtn").addEventListener("click", () => {
-      showPage("page3");
-    });
-
-    const freeScale = document.getElementById("freeScale");
-    const scaleValue = document.getElementById("scaleValue");
-
-    freeScale.addEventListener("input", () => {
-      scaleValue.textContent = freeScale.value;
-    });
-
-    let summaryText = "";
-
-    function buildSummary() {
-      return [
-        "Hi!",
-        "",
-        "Here are Ishika's answers from the form:",
-        "",
-        `1. Food item(s): ${answers.food}`,
-        `2. Cutest hobby: ${answers.hobby}`,
-        `3. Most liked option: ${answers.choice}`,
-        `4. Ice cream / waffles / something different: ${answers.dessert}`,
-        `5. Surprises or impatience: ${answers.surprise}`,
-        `6. Free on Sunday (1-10): ${answers.sunday}`,
-        "",
-        "Sent from the cute form 💗"
-      ].join("\n");
     }
 
-    document.getElementById("finishBtn").addEventListener("click", () => {
-      answers.sunday = freeScale.value;
-      summaryText = buildSummary();
-      document.getElementById("summaryPreview").value = summaryText;
-      document.getElementById("copyToast").textContent = "";
-      showPage("page4");
-    });
+    function goBack() {
+      saveCurrentAnswer();
 
-    document.getElementById("sendMailBtn").addEventListener("click", () => {
-      if (MAIL_TO === "YOUR_EMAIL@example.com") {
-        document.getElementById("copyToast").textContent =
-          "First replace YOUR_EMAIL@example.com with your own email address.";
-        return;
+      if (currentIndex > 0) {
+        currentIndex -= 1;
+        renderQuestion();
+      } else {
+        setScreen(introScreen);
       }
+    }
 
-      const subject = encodeURIComponent("Ishika's Form Response 💗");
-      const body = encodeURIComponent(summaryText);
-      window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
-    });
+    function buildEmailBody() {
+      return questions
+        .map((question, index) => `${index + 1}. ${question}: ${answers[index] || "-"}`)
+        .join("\n");
+    }
 
-    document.getElementById("copyAnswersBtn").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(summaryText);
-        document.getElementById("copyToast").textContent = "Answers copied 💗";
-      } catch (error) {
-        document.getElementById("copyToast").textContent =
-          "Copy didn’t work here. Long-press inside the box and copy the text.";
+    function openEmail() {
+      saveCurrentAnswer();
+
+      const subject = encodeURIComponent("Ishika Form Answers");
+      const body = encodeURIComponent(buildEmailBody());
+
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    function editAnswers() {
+      currentIndex = 0;
+      renderQuestion();
+      setScreen(questionScreen);
+    }
+
+    startBtn.addEventListener("click", startForm);
+    nextBtn.addEventListener("click", goNext);
+    backBtn.addEventListener("click", goBack);
+    mailBtn.addEventListener("click", openEmail);
+    editBtn.addEventListener("click", editAnswers);
+
+    answerInput.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+        goNext();
       }
     });
   </script>
