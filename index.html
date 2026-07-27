@@ -398,7 +398,7 @@
 
         <textarea
           id="answerInput"
-          placeholder="Write your answer here..."
+          placeholder="        "
         ></textarea>
 
         <div class="field-note" id="questionNote"></div>
@@ -425,10 +425,10 @@
 
       <div class="card wide">
         <p class="note-text">
-          What do you think — who is the bigger cutie pie: Radha or you?
-          I’ve never said this to you, but the winner is you.
-          Please don’t discuss this with me, because I’ll get shy.
-          And your eyes are the clearest in this picture, so don’t ask why I chose this one.
+          What do you think, Ishika, mujhe zyada cutiepie kaun lagti hai, Radha ya tum?
+          Actually, mujhe na sharam aati hai, isliye bola nhi abhi tak
+          but I really find Radha ki maalkin even more cutiepie than her.
+          Ispe discussion mat karna please, mujhe sharam aati hai.
         </p>
       </div>
 
@@ -469,12 +469,11 @@
     <div class="page-inner">
       <div class="card wide">
         <p class="final-text">
-          <strong><em>Thanks for filling out this form, sikar ri chori 💗</em></strong>
+          <strong><em>Thanks, Dhanyavad, Gracias, Arigato, tumcha Aabhari aahe sikar ri chori</em></strong>
         </p>
 
         <p class="small-copy">
-          Tap the button below to open an email with all the answers.
-          If the mail app doesn’t open, use the copy button.
+          Email : mayankjain.iitbombay@gmail.com
         </p>
 
         <div class="end-actions">
@@ -498,7 +497,7 @@
   </section>
 
   <script>
-    const MAIL_TO = "YOUR_EMAIL@example.com";
+    const MAIL_TO = "mayankjain.iitbombay@gmail.com";
 
     const pageIds = ["page0", "page1", "page2", "page3", "page4"];
 
@@ -541,7 +540,7 @@
 
       noMoves += 1;
       if (noMoves > 2) {
-        noBtn.textContent = "Still no? 😌";
+        noBtn.textContent = "Still No?";
       }
     }
 
@@ -570,7 +569,7 @@
     const questions = [
       {
         key: "food",
-        text: "Ishika, tell me — which food item(s) could you literally eat every week without getting bored?"
+        text: "Ishika, tell me, which food item(s) could you literally eat every week without getting bored?"
       },
       {
         key: "hobby",
@@ -578,15 +577,15 @@
       },
       {
         key: "choice",
-        text: "Which do you like the most — travelling, shopping, watching movies in the theatre, cafés, beaches, or just sleeping?"
+        text: "Which do you like the most shopping, watch a movie in theatre, café hoping, beaches, or just sleeping?"
       },
       {
         key: "dessert",
-        text: "Ice cream, waffles, or something different?"
+        text: "Ice cream or waffles, or something different?"
       },
       {
         key: "surprise",
-        text: "Do you like surprises, or are you impatient like me?"
+        text: "Do you like surprises ?"
       }
     ];
 
@@ -676,7 +675,7 @@
     document.getElementById("sendMailBtn").addEventListener("click", () => {
       if (MAIL_TO === "mayankjain.iitbombay@gmail.com") {
         document.getElementById("copyToast").textContent =
-          "First replace YOUR_EMAIL@example.com with your own email address.";
+          "First replace mayankjain.iitbombay@gmail.com with your own email address.";
         return;
       }
 
