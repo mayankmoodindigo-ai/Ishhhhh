@@ -472,32 +472,18 @@
           <strong><em>Thanks, Dhanyavad, Gracias, Arigato, tumcha Aabhari aahe sikar ri chori</em></strong>
         </p>
 
-        <p class="small-copy">
-          Email : mayankjain.iitbombay@gmail.com
-        </p>
-
         <div class="end-actions">
           <button id="sendMailBtn" class="btn btn-primary" type="button">
             Send answers
           </button>
-          <button id="copyAnswersBtn" class="btn ghost-btn" type="button">
-            Copy answers
-          </button>
         </div>
-
-        <div class="toast" id="copyToast"></div>
-
-        <textarea
-          id="summaryPreview"
-          readonly
-          style="margin-top: 14px; min-height: 180px;"
-        ></textarea>
+        <img src="your-image.png" alt="Final image" class="final-image" />
       </div>
     </div>
   </section>
 
   <script>
-    const MAIL_TO = "youremail@example.com";
+    const MAIL_TO = "mayankjain.iitbombay@gmail.com";
 
     const pageIds = ["page0", "page1", "page2", "page3", "page4"];
 
@@ -667,31 +653,14 @@
     document.getElementById("finishBtn").addEventListener("click", () => {
       answers.sunday = freeScale.value;
       summaryText = buildSummary();
-      document.getElementById("summaryPreview").value = summaryText;
-      document.getElementById("copyToast").textContent = "";
       showPage("page4");
     });
 
     document.getElementById("sendMailBtn").addEventListener("click", () => {
-      if (MAIL_TO === "youremail@example.com") {
-        document.getElementById("copyToast").textContent =
-          " ";
-        return;
-      }
 
       const subject = encodeURIComponent("Ishika's Form Response ");
       const body = encodeURIComponent(summaryText);
       window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
-    });
-
-    document.getElementById("copyAnswersBtn").addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(summaryText);
-        document.getElementById("copyToast").textContent = "Answers copied ";
-      } catch (error) {
-        document.getElementById("copyToast").textContent =
-          "Copy didn’t work here. Long-press inside the box and copy the text.";
-      }
     });
   </script>
 </body>
